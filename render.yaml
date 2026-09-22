@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: github-mcp-server
+    runtime: docker
+    plan: free
+    branch: main
+    healthCheckPath: /healthz
+    autoDeploy: true
+    envVars:
+      - key: GITHUB_HOST
+        value: github.com
