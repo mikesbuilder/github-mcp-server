@@ -307,6 +307,12 @@ func initConfig() {
 	viper.SetEnvPrefix("github")
 	viper.SetEnvKeyReplacer(strings.NewReplacer("-", "_"))
 	viper.AutomaticEnv()
+
+	// Cloud web-service platforms commonly provide the listening port through
+	// PORT. Honor it when no explicit --port/GITHUB_PORT configuration is set.
+	if os.Getenv("PORT") != "" && !viper.IsSet("port") {
+		viper.Set("port", os.Getenv("PORT"))
+	}
 }
 
 func main() {
