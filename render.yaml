@@ -6,6 +6,7 @@ services:
     branch: main
     healthCheckPath: /healthz
     autoDeploy: true
+    dockerCommand: http --base-url https://github-mcp-server-ix19.onrender.com
     envVars:
       - key: GITHUB_HOST
         value: github.com
