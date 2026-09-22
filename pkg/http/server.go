@@ -256,6 +256,13 @@ func RunHTTPServer(cfg ServerConfig) error {
 func newHTTPRouter(registerMCPRoutes, registerOAuthRoutes func(chi.Router)) chi.Router {
 	r := chi.NewRouter()
 	r.Use(middleware.SetCorsHeaders)
+
+	// Public liveness endpoint for hosted deployments. It is intentionally
+	// registered before the MCP authentication middleware.
+	r.Get("/healthz", func(w http.ResponseWriter, _ *http.Request) {
+		w.WriteHeader(http.StatusOK)
+	})
+
 	r.Group(registerMCPRoutes)
 	r.Group(registerOAuthRoutes)
 	return r
